@@ -110,7 +110,7 @@ public class GameState {
         return spawnTimer;
     }
 
-    private final float ENEMY_SPAWN_BUFFER_HACK = 50f;
+    private final float ENEMY_SPAWN_BUFFER_HACK = 10f;
     private void spawnElephant() {
         float direction = _rand.nextBoolean() ? 1f : -1f;
         float xPos = direction > 0f ? 0f : _width;
