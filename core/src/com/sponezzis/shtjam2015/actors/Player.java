@@ -62,16 +62,16 @@ public class Player extends Actor {
         if(playerDataComponent.alive) {
             updateMovement();
             updateShooting();
-            if(playerDataComponent.invincibilityTime > 0f) {
-                playerDataComponent.invincibilityTime -= (float)Time.time;
-                if(playerDataComponent.invincibilityTime < 0.01f) {
-                    BodyComponent bodyComponent = _bodyComponents.get(getEntity());
-                    Fixture fixture = bodyComponent.body.getFixtureList().get(0); // TODO: this only works with single fixture player. should be cool but be aware
-                    Filter filter = fixture.getFilterData();
-                    filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_ENEMY | Constants.BITMASK_POWERUP;
-                    fixture.setFilterData(filter);
-                    playerDataComponent.invincibilityTime = -1f;
-                }
+            playerDataComponent.invincibilityTime -= (float)Time.time;
+            if(playerDataComponent.invincibilityTime < -1f)
+                playerDataComponent.invincibilityTime = -1f; // TODO: a ridiculous hack but theres some weirdness in the windows build i hope this will solve
+            if(playerDataComponent.invincibilityTime < 0.01f) {
+                BodyComponent bodyComponent = _bodyComponents.get(getEntity());
+                Fixture fixture = bodyComponent.body.getFixtureList().get(0); // TODO: this only works with single fixture player. should be cool but be aware
+                Filter filter = fixture.getFilterData();
+                filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_ENEMY | Constants.BITMASK_POWERUP;
+                fixture.setFilterData(filter);
+                playerDataComponent.invincibilityTime = -1f;
             }
         }
         else {
