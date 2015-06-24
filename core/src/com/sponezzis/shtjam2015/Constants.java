@@ -20,5 +20,7 @@ public class Constants {
 
     public static final float PLAYER_ACCEL = 0.5f;
     public static final float PLAYER_MAXSPEED = 3f;
+    public static final float BULLET_SPEED = .02f;
+    public static final float PLAYER_SHOOTING_COOLDOWN = 20f;
 
 }

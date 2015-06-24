@@ -13,10 +13,20 @@ public class InputManager implements InputProcessor {
     public static boolean moveLeftActive = false;
     public static boolean moveRightActive = false;
 
+    public static boolean shootingUpActive = false;
+    public static boolean shootingDownActive = false;
+    public static boolean shootingLeftActive = false;
+    public static boolean shootingRightActive = false;
+
     private static final int MOVE_UP_KEY = Input.Keys.W;
     private static final int MOVE_DOWN_KEY = Input.Keys.S;
     private static final int MOVE_LEFT_KEY = Input.Keys.A;
     private static final int MOVE_RIGHT_KEY = Input.Keys.D;
+
+    private static final int SHOOTING_UP_KEY = Input.Keys.UP;
+    private static final int SHOOTING_DOWN_KEY = Input.Keys.DOWN;
+    private static final int SHOOTING_LEFT_KEY = Input.Keys.LEFT;
+    private static final int SHOOTING_RIGHT_KEY = Input.Keys.RIGHT;
 
     @Override
     public boolean keyDown(int keycode)
@@ -34,6 +44,30 @@ public class InputManager implements InputProcessor {
                 break;
             case MOVE_RIGHT_KEY:
                 moveRightActive = true;
+                break;
+            case SHOOTING_UP_KEY:
+                shootingUpActive = true;
+                shootingDownActive = false;
+                shootingLeftActive = false;
+                shootingRightActive = false;
+                break;
+            case SHOOTING_DOWN_KEY:
+                shootingDownActive = true;
+                shootingUpActive = false;
+                shootingLeftActive = false;
+                shootingRightActive = false;
+                break;
+            case SHOOTING_LEFT_KEY:
+                shootingLeftActive = true;
+                shootingUpActive = false;
+                shootingDownActive = false;
+                shootingRightActive = false;
+                break;
+            case SHOOTING_RIGHT_KEY:
+                shootingRightActive = true;
+                shootingUpActive = false;
+                shootingDownActive = false;
+                shootingLeftActive = false;
                 break;
         }
         return true;
@@ -55,6 +89,18 @@ public class InputManager implements InputProcessor {
                 break;
             case MOVE_RIGHT_KEY:
                 moveRightActive = false;
+                break;
+            case SHOOTING_UP_KEY:
+                shootingUpActive = false;
+                break;
+            case SHOOTING_DOWN_KEY:
+                shootingDownActive = false;
+                break;
+            case SHOOTING_LEFT_KEY:
+                shootingLeftActive = false;
+                break;
+            case SHOOTING_RIGHT_KEY:
+                shootingRightActive = false;
                 break;
         }
         return true;

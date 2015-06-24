@@ -16,6 +16,7 @@ public class ResourceManager {
 
         _textures.put("splashscreen", new Texture("splashscreen.png"));
         _textures.put("player", new Texture("player.png"));
+        _textures.put("bullet", new Texture("bullet.png"));
     }
 
     public static Texture getTexture(String name) {
