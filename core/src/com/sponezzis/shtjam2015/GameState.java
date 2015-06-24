@@ -16,6 +16,9 @@ public class GameState {
     private float _enemySpawnTimer;
     private Random _rand;
 
+    public float getWidth()             { return _width; }
+    public float getHeight()            { return _height; }
+
     private GameState(float width, float height) {
         _width = width;
         _height = height;
@@ -49,9 +52,9 @@ public class GameState {
         float direction = _rand.nextBoolean() ? 1f : -1f;
         float xPos = direction > 0f ? 0f : _width;
         float yPos = getRandomFloat(0f, _height);
-        Entity enemyEntity = Elephant.makeElephantEntity(xPos, yPos, direction);
-        EntityManager.getInstance().addEntity(enemyEntity);
-        EntityManager.getInstance().addActor(new Elephant(enemyEntity));
+        Elephant elephant = Elephant.makeElephant(xPos, yPos, direction);
+        EntityManager.getInstance().addEntity(elephant.getEntity());
+        EntityManager.getInstance().addActor(elephant);
     }
 
     private float getRandomFloat(float start, float end) {

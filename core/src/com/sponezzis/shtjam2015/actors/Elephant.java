@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.sponezzis.shtjam2015.BodyFactory;
-import com.sponezzis.shtjam2015.Constants;
-import com.sponezzis.shtjam2015.ResourceManager;
+import com.sponezzis.shtjam2015.*;
 import com.sponezzis.shtjam2015.components.*;
 
 /**
@@ -14,11 +12,14 @@ import com.sponezzis.shtjam2015.components.*;
  */
 public class Elephant extends Actor {
 
-    public Elephant(Entity entity) {
+    private float _direction;
+
+    public Elephant(Entity entity, float direction) {
         super(entity);
+        _direction = direction;
     }
 
-    public static Entity makeElephantEntity(float xPos, float yPos, float direction) {
+    public static Elephant makeElephant(float xPos, float yPos, float direction) {
         Entity entity = new Entity();
 
         RenderComponent renderComponent = new RenderComponent(0);
@@ -38,11 +39,25 @@ public class Elephant extends Actor {
 
         body.applyLinearImpulse(direction * Constants.SPEED_ELEPHANT, 0f, body.getWorldCenter().x, body.getWorldCenter().y, true);
 
-        return entity;
+        Elephant elephant = new Elephant(entity, direction);
+        elephant.setSizeXInPixels(sprite.getWidth());
+        elephant.setSizeYInPixels(sprite.getHeight());
+
+        return elephant;
     }
 
     @Override
     public void update() {
+        if((_direction < 0f) && (getPosition().x < (0f - getSizeXInPixels()))) {
+            EntityManager.getInstance().destroyEntity(getEntity());
+            EntityManager.getInstance().removeActor(this);
+            return;
+        }
+        if((_direction > 0f) && (getPosition().x > GameState.getInstance().getWidth())) {
+            EntityManager.getInstance().destroyEntity(getEntity());
+            EntityManager.getInstance().removeActor(this);
+            return;
+        }
 
     }
 

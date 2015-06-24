@@ -16,6 +16,13 @@ public class Actor {
     private Body _body;
     protected Body getBody()            { return _body; }
 
+    private float _sizeXInPixels;
+    protected void setSizeXInPixels(float size)     { _sizeXInPixels = size; }
+    protected float getSizeXInPixels()              { return _sizeXInPixels; }
+
+    private float _sizeYInPixels;
+    protected void setSizeYInPixels(float size)     { _sizeYInPixels = size; }
+    protected float getSizeYInPixels()              { return _sizeYInPixels; }
 
     private PositionComponent _positionComponent;
     protected PositionComponent getPosition()     { return _positionComponent; }

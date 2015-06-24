@@ -92,9 +92,8 @@ public class GameScreen implements Screen {
 
         GameState.initialize(_screenWidth, _screenHeight);
 
-        Entity playerEntity = Player.makePlayerEntity();
-        EntityManager.getInstance().addEntity(playerEntity);
-        Player player = new Player(playerEntity);
+        Player player = Player.makePlayer();
+        EntityManager.getInstance().addEntity(player.getEntity());
         EntityManager.getInstance().addActor(player);
 
         // side bounds

@@ -38,6 +38,20 @@ public class ContactManager implements ContactListener {
         else if((Constants.BITMASK_PLAYER_BULLET == fixtureBType) && (Constants.BITMASK_LEVEL_BOUNDS == fixtureAType)) {
             EntityManager.getInstance().destroyEntity(entityB);
         }
+
+        else if((Constants.BITMASK_PLAYER_BULLET == fixtureAType) && (Constants.BITMASK_ENEMY == fixtureBType)) {
+            // kill enemy
+        }
+        else if((Constants.BITMASK_PLAYER_BULLET == fixtureBType) && (Constants.BITMASK_ENEMY == fixtureAType)) {
+            // kill enemy
+        }
+
+        else if((Constants.BITMASK_PLAYER == fixtureAType) && (Constants.BITMASK_ENEMY == fixtureBType)) {
+            // kill player
+        }
+        else if((Constants.BITMASK_PLAYER == fixtureBType) && (Constants.BITMASK_ENEMY == fixtureAType)) {
+            // kill player
+        }
     }
 
     @Override

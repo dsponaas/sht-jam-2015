@@ -14,15 +14,13 @@ import com.sponezzis.shtjam2015.components.*;
 public class Player extends Actor {
 
     private float _shotTimer;
-    private final float halfSizeX = 20f; // TODO: highly hackish but i'll probly leave it as is
-    private final float halfSizeY = 20f; // TODO: highly hackish but i'll probly leave it as is
 
     public Player(Entity entity) {
         super(entity);
         _shotTimer = -1f;
     }
 
-    public static Entity makePlayerEntity() {
+    public static Player makePlayer() {
         Entity entity = new Entity();
 
         Sprite sprite = new Sprite(ResourceManager.getTexture("player"));
@@ -37,7 +35,12 @@ public class Player extends Actor {
         PlayerDataComponent playerDataComponent = new PlayerDataComponent();
 
         entity.add(playerPositionComponent).add(playerBodyComponent).add(spriteComponent).add(renderComponent).add(playerDataComponent);
-        return entity;
+
+        Player player = new Player(entity);
+        player.setSizeXInPixels(sprite.getWidth());
+        player.setSizeYInPixels(sprite.getHeight());
+
+        return player;
     }
 
     @Override
@@ -100,22 +103,22 @@ public class Player extends Actor {
             if(InputManager.shootingDownActive) {
                 shooting = true;
                 shotDirection.y = -1f;
-                pos.y -= halfSizeY;
+                pos.y -= getSizeYInPixels() / 2;
             }
             else if(InputManager.shootingLeftActive) {
                 shooting = true;
                 shotDirection.x = -1f;
-                pos.x -= halfSizeX;
+                pos.x -= getSizeXInPixels() / 2;
             }
             else if(InputManager.shootingRightActive) {
                 shooting = true;
                 shotDirection.x = 1f;
-                pos.x += halfSizeX;
+                pos.x += getSizeXInPixels() / 2;
             }
             else if(InputManager.shootingUpActive) {
                 shooting = true;
                 shotDirection.y = 1f;
-                pos.y += halfSizeY;
+                pos.y += getSizeYInPixels() / 2;
             }
             if(shooting) {
                 Entity bulletEntity = new Entity();
@@ -141,7 +144,7 @@ public class Player extends Actor {
 
     public Vector2 getCenterPos() {
         PositionComponent positionComponent = getPosition();
-        return new Vector2(positionComponent.x + halfSizeX, positionComponent.y + halfSizeY);
+        return new Vector2(positionComponent.x + (getSizeXInPixels() / 2), positionComponent.y + (getSizeYInPixels() / 2));
     }
 
 }
