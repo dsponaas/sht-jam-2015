@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +29,7 @@ public class GameScreen implements Screen {
 
     private int _screenWidth, _screenHeight;
     private SpriteBatch _spriteBatch;
+    private SpriteBatch _hudBatch;
 
     private InputManager _inputManager;
 
@@ -36,6 +38,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         _spriteBatch = new SpriteBatch();
+        _hudBatch = new SpriteBatch();
         _debugRenderer = new Box2DDebugRenderer();
 
         _engine = initializeEngine();
@@ -79,6 +82,8 @@ public class GameScreen implements Screen {
         _engine.update((float) Time.time);
         _spriteBatch.setProjectionMatrix(_camera.combined);
         _spriteBatch.end();
+
+        renderHud();
 
         EntityManager.getInstance().update();
 
@@ -154,6 +159,18 @@ public class GameScreen implements Screen {
         Body body = _world.createBody(bodyDef);
         body.createFixture(fixtureDef);
         shape.dispose();
+    }
+
+    private void renderHud() {
+        BitmapFont hudFont = ResourceManager.getHudFont();
+
+        _hudBatch.begin();
+        float scoreIconXPos = 4f; // lil bit of padding here...
+        int level = GameState.getInstance().getLevel();
+        int score = GameState.getInstance().getScore();
+        int lives = GameState.getInstance().getLives();
+        hudFont.draw(_hudBatch, "LIVES: " + lives + "   LEVEL: " + level + "   SCORE: " + score, scoreIconXPos, (float) Gdx.graphics.getHeight() - 4f); // TODO: actually show the score
+        _hudBatch.end();
     }
 
 }

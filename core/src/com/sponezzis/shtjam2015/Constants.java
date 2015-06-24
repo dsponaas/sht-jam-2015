@@ -11,6 +11,7 @@ public class Constants {
     public static final int TARGET_FPS = 60;
     public static final String LOG_TAG = "ShtJam2015";
 
+    public static final float TIME_PER_LEVEL = 1200f;
     public static final float FRICTION = 0.5f;
 
     public static final short BITMASK_PLAYER = 0x0001;
