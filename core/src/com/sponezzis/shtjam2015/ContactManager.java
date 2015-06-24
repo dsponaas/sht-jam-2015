@@ -92,6 +92,7 @@ public class ContactManager implements ContactListener {
         entity.remove(RenderComponent.class);
 
         GameState.getInstance().incrementScore(enemyDataComponent.points);
+        ResourceManager.getElephantDeathSound().play(Constants.SOUND_VOLUME_ELEPHANT_DEATH);
     }
 
     private void killPlayer(Entity entity, Body body, Fixture fixture, PlayerDataComponent playerDataComponent) {
@@ -109,6 +110,7 @@ public class ContactManager implements ContactListener {
 
         playerDataComponent.alive = false;
         playerDataComponent.playerDeathTime = Constants.PLAYER_DEATH_TIME;
+        ResourceManager.getPlayerDeathSound().play(Constants.SOUND_VOLUME_PLAYER_DEATH);
     }
 
     @Override

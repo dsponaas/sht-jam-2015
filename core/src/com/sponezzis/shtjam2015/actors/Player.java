@@ -184,6 +184,7 @@ public class Player extends Actor {
                     shoot(pos.x, pos.y, leftShot.x, leftShot.y);
                     shoot(pos.x, pos.y, rightShot.x, rightShot.y);
                 }
+                ResourceManager.getShootingSound().play(Constants.SOUND_VOLUME_SHOOTING);
 
                 float shotCooldown = Constants.PLAYER_SHOOTING_COOLDOWN;
                 if(GameState.getInstance().getPlayerData().rapidShotTime >= 0f)
@@ -209,7 +210,8 @@ public class Player extends Actor {
 
         velX *= Constants.BULLET_SPEED;
         velY *= Constants.BULLET_SPEED;
-        body.applyLinearImpulse(velX, velY, body.getWorldCenter().x, body.getWorldCenter().y, true);    }
+        body.applyLinearImpulse(velX, velY, body.getWorldCenter().x, body.getWorldCenter().y, true);
+    }
 
     public Vector2 getCenterPos() {
         PositionComponent positionComponent = getPosition();

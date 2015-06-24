@@ -33,6 +33,10 @@ public class Constants {
     public static final int POINTS_ELEPHANT = 30;
     public static final float SPEED_ELEPHANT = 1.2f;
 
+    public static final float SOUND_VOLUME_SHOOTING = 0.05f;
+    public static final float SOUND_VOLUME_ELEPHANT_DEATH = 0.1f;
+    public static final float SOUND_VOLUME_PLAYER_DEATH = 1.0f;
+
     public static final float TIME_BETWEEN_POWERUPS = 600f;
     public static final float POWERUP_TIMER = 600f;
     public enum PowerupType {

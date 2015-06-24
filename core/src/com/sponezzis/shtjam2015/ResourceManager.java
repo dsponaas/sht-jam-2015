@@ -1,6 +1,8 @@
 package com.sponezzis.shtjam2015;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -15,6 +17,11 @@ public class ResourceManager {
     private static HashMap<String, Texture> _textures;
     private static BitmapFont _hudFont;
     private static BitmapFont _scoreFont;
+
+    private static Music _gameMusic;
+    private static Sound _shootingSound;
+    private static Sound _playerDeathSound;
+    private static Sound _elephantDeathSound;
 
     public static void initialize() {
         _textures = new HashMap<String, Texture>();
@@ -36,6 +43,10 @@ public class ResourceManager {
         _textures.put("ground", new Texture("ground.png"));
         _textures.put("gameover", new Texture("gameover.png"));
 
+        _shootingSound = Gdx.audio.newSound(Gdx.files.internal("shooting.ogg"));
+        _elephantDeathSound = Gdx.audio.newSound(Gdx.files.internal("elephant_death.ogg"));
+        _playerDeathSound = Gdx.audio.newSound(Gdx.files.internal("player_death.ogg"));
+
         initFonts();
     }
 
@@ -44,6 +55,9 @@ public class ResourceManager {
     }
     public static BitmapFont getHudFont() { return _hudFont; }
     public static BitmapFont getScoreFont() { return _scoreFont; }
+    public static Sound getShootingSound() { return _shootingSound; }
+    public static Sound getElephantDeathSound() { return _elephantDeathSound; }
+    public static Sound getPlayerDeathSound() { return _playerDeathSound; }
 
     private static void initFonts() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comicsans.ttf"));
