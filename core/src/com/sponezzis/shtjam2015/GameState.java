@@ -1,7 +1,12 @@
 package com.sponezzis.shtjam2015;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.sponezzis.shtjam2015.actors.Elephant;
+import com.sponezzis.shtjam2015.actors.Player;
+import com.sponezzis.shtjam2015.components.*;
 
 import java.util.Random;
 
@@ -14,6 +19,7 @@ public class GameState {
 
     private float _width, _height;
     private float _enemySpawnTimer;
+    private float _powerupSpawnTimer;
     private Random _rand;
 
     private float _levelTimer;
@@ -27,10 +33,21 @@ public class GameState {
 
     private int _score;
     public int getScore()                   { return _score; }
-    public void incrementScore(int val)     { _score += val; }
+    public void incrementScore(int val) {
+        if(getPlayerData().points2xTime >= 0f)
+            val *= 2;
+        _score += val;
+    }
 
     public float getWidth()             { return _width; }
     public float getHeight()            { return _height; }
+
+    private Player _player;
+    public Player getPlayer()               { return _player; }
+    public void setPlayer(Player player)    { _player = player; }
+    public PlayerDataComponent getPlayerData()      { return _playerDataComponents.get(_player.getEntity()); }
+
+    private ComponentMapper<PlayerDataComponent> _playerDataComponents = ComponentMapper.getFor(PlayerDataComponent.class);
 
     private GameState(float width, float height) {
         _width = width;
@@ -39,6 +56,8 @@ public class GameState {
 
         _level = 1;
         _levelTimer = Constants.TIME_PER_LEVEL;
+
+        _powerupSpawnTimer = Constants.TIME_BETWEEN_POWERUPS;
 
         _lives = 2;
 
@@ -55,8 +74,14 @@ public class GameState {
     }
 
     public void update() {
-        _enemySpawnTimer -= (float)Time.time;
-        _levelTimer -= (float)Time.time;
+        PlayerDataComponent playerData = getPlayerData();
+
+        if(playerData.alive && (playerData.invincibilityTime <= 0f)) {
+            _enemySpawnTimer -= (float) Time.time;
+            _levelTimer -= (float) Time.time;
+            _powerupSpawnTimer -= (float) Time.time;
+        }
+
         if(_enemySpawnTimer < 0f) {
             spawnElephant();
             _enemySpawnTimer = getSpawnTimer();
@@ -65,19 +90,58 @@ public class GameState {
             ++_level;
             _levelTimer = Constants.TIME_PER_LEVEL;
         }
+        if(_powerupSpawnTimer < 0f) {
+            _powerupSpawnTimer = Constants.TIME_BETWEEN_POWERUPS;
+            spawnPowerup();
+        }
     }
 
+    private final float SPAWN_INCREASE_RATE_HACK = 0.6f;
     private float getSpawnTimer() {
-        return 300f;
+        float spawnTimer = Constants.BASE_SPAWN_TIMER;
+        for(int i = 1; i < _level; ++i)
+            spawnTimer *= SPAWN_INCREASE_RATE_HACK;
+        return spawnTimer;
     }
 
+    private final float ENEMY_SPAWN_BUFFER_HACK = 50f;
     private void spawnElephant() {
         float direction = _rand.nextBoolean() ? 1f : -1f;
         float xPos = direction > 0f ? 0f : _width;
-        float yPos = getRandomFloat(0f, _height);
+        float yPos = getRandomFloat(0f + ENEMY_SPAWN_BUFFER_HACK, _height - Constants.TOP_OF_SCREEN_BUFFER - ENEMY_SPAWN_BUFFER_HACK);
         Elephant elephant = Elephant.makeElephant(xPos, yPos, direction);
         EntityManager.getInstance().addEntity(elephant.getEntity());
         EntityManager.getInstance().addActor(elephant);
+    }
+
+    private final float POWERUP_LEVEL_BOUNDS_BUFFER = 100f;
+    public void spawnPowerup() {
+        Entity entity = new Entity();
+
+        int type = _rand.nextInt(Constants.PowerupType.values().length);
+
+        float xPos = getRandomFloat(0f + POWERUP_LEVEL_BOUNDS_BUFFER, _width - POWERUP_LEVEL_BOUNDS_BUFFER);
+        float yPos = getRandomFloat(0f + POWERUP_LEVEL_BOUNDS_BUFFER, _height - Constants.TOP_OF_SCREEN_BUFFER - POWERUP_LEVEL_BOUNDS_BUFFER);
+        PositionComponent positionComponent = new PositionComponent(xPos, yPos);
+
+        Sprite sprite = null;
+        if(type == Constants.PowerupType.RPD_SHOT.ordinal())
+            sprite = new Sprite(ResourceManager.getTexture("powerup_rpd"));
+        else if(type == Constants.PowerupType.SPRD_SHOT.ordinal())
+            sprite = new Sprite(ResourceManager.getTexture("powerup_sprd"));
+        else if(type == Constants.PowerupType.POINTS_2X.ordinal())
+            sprite = new Sprite(ResourceManager.getTexture("powerup_2x"));
+        else if(type == Constants.PowerupType.EXTRA_LIFE.ordinal())
+            sprite = new Sprite(ResourceManager.getTexture("powerup_1up"));
+
+        SpriteComponent spriteComponent = new SpriteComponent(sprite);
+        BodyComponent bodyComponent = new BodyComponent(positionComponent, BodyFactory.getInstance().generate(entity, "powerup.json", new Vector2(xPos, yPos)));
+        PowerupComponent powerupComponent = new PowerupComponent(Constants.PowerupType.fromInt(type));
+        RenderComponent renderComponent = new RenderComponent(0);
+
+        entity.add(positionComponent).add(spriteComponent).add(bodyComponent).add(powerupComponent).add(renderComponent);
+
+        EntityManager.getInstance().addEntity(entity);
     }
 
     private float getRandomFloat(float start, float end) {

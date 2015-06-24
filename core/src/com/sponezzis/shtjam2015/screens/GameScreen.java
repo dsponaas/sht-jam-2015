@@ -14,7 +14,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.sponezzis.shtjam2015.*;
 import com.sponezzis.shtjam2015.actors.Player;
+import com.sponezzis.shtjam2015.components.PlayerDataComponent;
+import com.sponezzis.shtjam2015.systems.PlayerDataSystem;
 import com.sponezzis.shtjam2015.systems.PositionSystem;
+import com.sponezzis.shtjam2015.systems.PowerupSystem;
 import com.sponezzis.shtjam2015.systems.RenderSpriteSystem;
 
 /**
@@ -81,13 +84,14 @@ public class GameScreen implements Screen {
         _spriteBatch.begin();
         _engine.update((float) Time.time);
         _spriteBatch.setProjectionMatrix(_camera.combined);
+        renderActivePowerups();
         _spriteBatch.end();
 
         renderHud();
 
         EntityManager.getInstance().update();
 
-        _debugRenderer.render(_world, debugMatrix);
+//        _debugRenderer.render(_world, debugMatrix);
     }
 
     @Override
@@ -100,6 +104,7 @@ public class GameScreen implements Screen {
         Player player = Player.makePlayer();
         EntityManager.getInstance().addEntity(player.getEntity());
         EntityManager.getInstance().addActor(player);
+        GameState.getInstance().setPlayer(player);
 
         // side bounds
         addLevelBounds(0f, 0f, 0f, height * Constants.PIXELS_TO_METERS);
@@ -107,7 +112,8 @@ public class GameScreen implements Screen {
 
         // vert bounds
         addLevelBounds(0f, 0f, width * Constants.PIXELS_TO_METERS, 0f);
-        addLevelBounds(0f, height * Constants.PIXELS_TO_METERS, width * Constants.PIXELS_TO_METERS, height * Constants.PIXELS_TO_METERS);
+        addLevelBounds(0f, (height * Constants.PIXELS_TO_METERS) - Constants.TOP_OF_SCREEN_BUFFER,
+                width * Constants.PIXELS_TO_METERS, (height * Constants.PIXELS_TO_METERS) - Constants.TOP_OF_SCREEN_BUFFER);
     }
 
     @Override
@@ -135,9 +141,13 @@ public class GameScreen implements Screen {
 
         PositionSystem positionSystem = new PositionSystem(0);
         RenderSpriteSystem renderSpriteSystem = new RenderSpriteSystem(_spriteBatch, 1);
+        PlayerDataSystem playerDataSystem = new PlayerDataSystem(2);
+        PowerupSystem powerupSystem = new PowerupSystem(3);
 
         engine.addSystem(positionSystem);
         engine.addSystem(renderSpriteSystem);
+        engine.addSystem(playerDataSystem);
+        engine.addSystem(powerupSystem);
 
         return engine;
     }
@@ -173,4 +183,22 @@ public class GameScreen implements Screen {
         _hudBatch.end();
     }
 
+    private final float POWERUP_BUFFER_HACK = 25f;
+    private void renderActivePowerups() {
+        float drawPosX = GameState.getInstance().getWidth() - POWERUP_BUFFER_HACK;
+        float drawPosY = GameState.getInstance().getHeight() - POWERUP_BUFFER_HACK + 3f;
+
+        PlayerDataComponent playerData = GameState.getInstance().getPlayerData();
+        if(playerData.spreadShotTime > 0f) {
+            _spriteBatch.draw(ResourceManager.getTexture("powerup_sprd_small"), drawPosX, drawPosY);
+            drawPosX -= POWERUP_BUFFER_HACK;
+        }
+        if(playerData.rapidShotTime > 0f) {
+            _spriteBatch.draw(ResourceManager.getTexture("powerup_rpd_small"), drawPosX, drawPosY);
+            drawPosX -= POWERUP_BUFFER_HACK;
+        }
+        if(playerData.points2xTime > 0f) {
+            _spriteBatch.draw(ResourceManager.getTexture("powerup_2x_small"), drawPosX, drawPosY);
+        }
+    }
 }

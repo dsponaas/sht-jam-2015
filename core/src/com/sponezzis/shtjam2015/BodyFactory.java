@@ -45,6 +45,8 @@ public class BodyFactory {
             categoryBits = Constants.BITMASK_ENEMY;
         else if (collisionType.equalsIgnoreCase("PLAYER_BULLET"))
             categoryBits = Constants.BITMASK_PLAYER_BULLET;
+        else if (collisionType.equalsIgnoreCase("POWERUP"))
+            categoryBits = Constants.BITMASK_POWERUP;
         else
             Gdx.app.log("WARNING", "Entity Box2D collision type undefined - " + collisionType);
 
@@ -54,7 +56,9 @@ public class BodyFactory {
         else if(Constants.BITMASK_ENEMY == categoryBits)
             maskingBits = Constants.BITMASK_PLAYER | Constants.BITMASK_PLAYER_BULLET;
         else if(Constants.BITMASK_PLAYER == categoryBits)
-            maskingBits = Constants.BITMASK_ENEMY | Constants.BITMASK_LEVEL_BOUNDS;
+            maskingBits = Constants.BITMASK_ENEMY | Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_POWERUP;
+        else if(Constants.BITMASK_POWERUP == categoryBits)
+            maskingBits = Constants.BITMASK_PLAYER;
         else
             Gdx.app.log("WARNING", "Entity Box2D masking bits undefined - " + categoryBits);
 

@@ -67,6 +67,15 @@ public class ContactManager implements ContactListener {
             if(playerDataComponent.alive && (playerDataComponent.invincibilityTime < 0f))
                 killPlayer(entityB, bodyB, fixtureB, playerDataComponent);
         }
+
+        else if((Constants.BITMASK_POWERUP == fixtureAType) && (Constants.BITMASK_PLAYER == fixtureBType)) {
+            PowerupComponent powerupComponent = entityA.getComponent(PowerupComponent.class);
+            powerupComponent.pickedUp = true;
+        }
+        else if((Constants.BITMASK_POWERUP == fixtureBType) && (Constants.BITMASK_PLAYER == fixtureAType)) {
+            PowerupComponent powerupComponent = entityB.getComponent(PowerupComponent.class);
+            powerupComponent.pickedUp = true;
+        }
     }
 
     private void killEnemy(Entity entity, Body body, Fixture fixture, EnemyDataComponent enemyDataComponent) {
@@ -87,7 +96,7 @@ public class ContactManager implements ContactListener {
 
     private void killPlayer(Entity entity, Body body, Fixture fixture, PlayerDataComponent playerDataComponent) {
         Filter filter = fixture.getFilterData();
-        filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS;
+        filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_POWERUP;
         fixture.setFilterData(filter);
 
         SpriteComponent spriteComponent = _spriteComponents.get(entity);

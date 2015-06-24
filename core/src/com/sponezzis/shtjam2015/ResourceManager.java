@@ -23,6 +23,13 @@ public class ResourceManager {
         _textures.put("deadplayer", new Texture("deadplayer.png"));
         _textures.put("bullet", new Texture("bullet.png"));
         _textures.put("elephant", new Texture("elephant.png"));
+        _textures.put("powerup_1up", new Texture("powerup_1up.png"));
+        _textures.put("powerup_rpd", new Texture("powerup_rpd.png"));
+        _textures.put("powerup_rpd_small", new Texture("powerup_rpd_small.png"));
+        _textures.put("powerup_sprd", new Texture("powerup_sprd.png"));
+        _textures.put("powerup_sprd_small", new Texture("powerup_sprd_small.png"));
+        _textures.put("powerup_2x", new Texture("powerup_2x.png"));
+        _textures.put("powerup_2x_small", new Texture("powerup_2x_small.png"));
 
         initHudFont();
     }

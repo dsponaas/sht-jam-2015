@@ -61,7 +61,7 @@ public class Player extends Actor {
                     BodyComponent bodyComponent = _bodyComponents.get(getEntity());
                     Fixture fixture = bodyComponent.body.getFixtureList().get(0); // TODO: this only works with single fixture player. should be cool but be aware
                     Filter filter = fixture.getFilterData();
-                    filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_ENEMY;
+                    filter.maskBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_ENEMY | Constants.BITMASK_POWERUP;
                     fixture.setFilterData(filter);
                     playerDataComponent.invincibilityTime = -1f;
                 }
@@ -153,26 +153,39 @@ public class Player extends Actor {
                 pos.y += getSizeYInPixels() / 2;
             }
             if(shooting) {
-                Entity bulletEntity = new Entity();
-                SpriteComponent bulletSprite = new SpriteComponent(new Sprite(ResourceManager.getTexture("bullet")));
+                shoot(pos.x, pos.y, shotDirection.x, shotDirection.y);
+                if(GameState.getInstance().getPlayerData().spreadShotTime > 0f) {
+                    Vector2 leftShot = (new Vector2(shotDirection.x, shotDirection.y)).rotate(15f);
+                    Vector2 rightShot = (new Vector2(shotDirection.x, shotDirection.y)).rotate(-15f);
+                    shoot(pos.x, pos.y, leftShot.x, leftShot.y);
+                    shoot(pos.x, pos.y, rightShot.x, rightShot.y);
+                }
 
-                PositionComponent bulletPosition = new PositionComponent(pos.x, pos.y);
-                Body body = BodyFactory.getInstance().generate(bulletEntity, "bullet.json", new Vector2(pos.x, pos.y));
-                BodyComponent bulletBody = new BodyComponent(bulletPosition, body);
-                RenderComponent renderComponent = new RenderComponent(0);
-
-                bulletEntity.add(bulletSprite).add(bulletPosition).add(bulletBody).add(renderComponent);
-                EntityManager.getInstance().addEntity(bulletEntity);
-
-                shotDirection.scl(Constants.BULLET_SPEED);
-                body.applyLinearImpulse(shotDirection.x, shotDirection.y, body.getWorldCenter().x, body.getWorldCenter().y, true);
-
-                _shotTimer = Constants.PLAYER_SHOOTING_COOLDOWN;
+                float shotCooldown = Constants.PLAYER_SHOOTING_COOLDOWN;
+                if(GameState.getInstance().getPlayerData().rapidShotTime >= 0f)
+                    shotCooldown /= 3;
+                _shotTimer = shotCooldown;
             }
         }
         else
             _shotTimer -= Time.time;
     }
+
+    private void shoot(float posX, float posY, float velX, float velY) {
+        Entity bulletEntity = new Entity();
+        SpriteComponent bulletSprite = new SpriteComponent(new Sprite(ResourceManager.getTexture("bullet")));
+
+        PositionComponent bulletPosition = new PositionComponent(posX, posY);
+        Body body = BodyFactory.getInstance().generate(bulletEntity, "bullet.json", new Vector2(posX, posY));
+        BodyComponent bulletBody = new BodyComponent(bulletPosition, body);
+        RenderComponent renderComponent = new RenderComponent(0);
+
+        bulletEntity.add(bulletSprite).add(bulletPosition).add(bulletBody).add(renderComponent);
+        EntityManager.getInstance().addEntity(bulletEntity);
+
+        velX *= Constants.BULLET_SPEED;
+        velY *= Constants.BULLET_SPEED;
+        body.applyLinearImpulse(velX, velY, body.getWorldCenter().x, body.getWorldCenter().y, true);    }
 
     public Vector2 getCenterPos() {
         PositionComponent positionComponent = getPosition();
@@ -183,6 +196,9 @@ public class Player extends Actor {
         playerDataComponent.playerDeathTime = -1f;
         playerDataComponent.invincibilityTime = Constants.PLAYER_INVINCIBILITY_TIME;
         playerDataComponent.alive = true;
+        playerDataComponent.rapidShotTime = -1f;
+        playerDataComponent.spreadShotTime = -1f;
+        playerDataComponent.points2xTime = -1f;
 
         SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
         spriteComponent.sprite = new Sprite(ResourceManager.getTexture("player"));
