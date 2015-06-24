@@ -23,4 +23,7 @@ public class Constants {
     public static final float BULLET_SPEED = .02f;
     public static final float PLAYER_SHOOTING_COOLDOWN = 20f;
 
+    public static final int POINTS_ELEPHANT = 30;
+    public static final float SPEED_ELEPHANT = .2f;
+
 }

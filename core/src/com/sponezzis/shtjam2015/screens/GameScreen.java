@@ -73,6 +73,8 @@ public class GameScreen implements Screen {
         _camera.position.y = _screenHeight / 2f;
         _camera.update();
 
+        GameState.getInstance().update();
+
         _spriteBatch.begin();
         _engine.update((float) Time.time);
         _spriteBatch.setProjectionMatrix(_camera.combined);
@@ -87,6 +89,8 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         _screenWidth = width;
         _screenHeight = height;
+
+        GameState.initialize(_screenWidth, _screenHeight);
 
         Entity playerEntity = Player.makePlayerEntity();
         EntityManager.getInstance().addEntity(playerEntity);

@@ -1,0 +1,19 @@
+{
+  BodyDef : {
+    type: DynamicBody,
+    collisionType: ENEMY,
+    dimensionX: 50,
+    dimensionY: 35
+  },
+  Fixtures : [
+    {
+      description: none,
+      isSensor: false,
+      type: RectangleShape,
+      width: 50,
+      height: 35,
+      x: 0,
+      y: 0
+    }
+  ]
+}
