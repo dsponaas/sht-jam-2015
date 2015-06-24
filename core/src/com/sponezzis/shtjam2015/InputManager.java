@@ -13,10 +13,10 @@ public class InputManager implements InputProcessor {
     public static boolean moveLeftActive = false;
     public static boolean moveRightActive = false;
 
-    private static final int MOVE_UP_KEY = Input.Keys.UP;
-    private static final int MOVE_DOWN_KEY = Input.Keys.DOWN;
-    private static final int MOVE_LEFT_KEY = Input.Keys.LEFT;
-    private static final int MOVE_RIGHT_KEY = Input.Keys.RIGHT;
+    private static final int MOVE_UP_KEY = Input.Keys.W;
+    private static final int MOVE_DOWN_KEY = Input.Keys.S;
+    private static final int MOVE_LEFT_KEY = Input.Keys.A;
+    private static final int MOVE_RIGHT_KEY = Input.Keys.D;
 
     @Override
     public boolean keyDown(int keycode)

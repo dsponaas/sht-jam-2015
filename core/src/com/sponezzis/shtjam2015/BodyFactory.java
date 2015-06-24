@@ -45,20 +45,16 @@ public class BodyFactory {
             categoryBits = Constants.BITMASK_ENEMY;
         else if (collisionType.equalsIgnoreCase("PLAYER_BULLET"))
             categoryBits = Constants.BITMASK_PLAYER_BULLET;
-        else if (collisionType.equalsIgnoreCase("ENEMY_BULLET"))
-            categoryBits = Constants.BITMASK_ENEMY_BULLET;
         else
             Gdx.app.log("WARNING", "Entity Box2D collision type undefined - " + collisionType);
 
         short maskingBits = 0;
         if(Constants.BITMASK_PLAYER_BULLET == categoryBits)
             maskingBits = Constants.BITMASK_ENEMY | Constants.BITMASK_LEVEL_BOUNDS;
-        else if(Constants.BITMASK_ENEMY_BULLET == categoryBits)
-            maskingBits = Constants.BITMASK_PLAYER | Constants.BITMASK_LEVEL_BOUNDS;
         else if(Constants.BITMASK_ENEMY == categoryBits)
-            maskingBits = Constants.BITMASK_LEVEL_BOUNDS | Constants.BITMASK_PLAYER_BULLET;
+            maskingBits = Constants.BITMASK_PLAYER | Constants.BITMASK_PLAYER_BULLET;
         else if(Constants.BITMASK_PLAYER == categoryBits)
-            maskingBits = Constants.BITMASK_ENEMY_BULLET | Constants.BITMASK_LEVEL_BOUNDS;
+            maskingBits = Constants.BITMASK_ENEMY | Constants.BITMASK_LEVEL_BOUNDS;
         else
             Gdx.app.log("WARNING", "Entity Box2D masking bits undefined - " + categoryBits);
 
@@ -76,7 +72,7 @@ public class BodyFactory {
         bodyDef.position.set(positionInMeters.x + (dimensionX / 2f * Constants.PIXELS_TO_METERS),
                 positionInMeters.y + (dimensionY / 2f * Constants.PIXELS_TO_METERS));
         Body retval = _world.createBody( bodyDef );
-        if((Constants.BITMASK_PLAYER_BULLET == categoryBits) || (Constants.BITMASK_ENEMY_BULLET == categoryBits))
+        if(Constants.BITMASK_PLAYER_BULLET == categoryBits)
             retval.setBullet(true);
         else
             retval.setBullet(false);

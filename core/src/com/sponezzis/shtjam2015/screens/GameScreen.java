@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
         addLevelBounds(width * Constants.PIXELS_TO_METERS, 0f, width * Constants.PIXELS_TO_METERS, height * Constants.PIXELS_TO_METERS);
 
         // vert bounds
-        addLevelBounds(0f, Constants.GROUND_HEIGHT_IN_PIXELS * Constants.PIXELS_TO_METERS, width * Constants.PIXELS_TO_METERS, Constants.GROUND_HEIGHT_IN_PIXELS * Constants.PIXELS_TO_METERS);
+        addLevelBounds(0f, 0f, width * Constants.PIXELS_TO_METERS, 0f);
         addLevelBounds(0f, height * Constants.PIXELS_TO_METERS, width * Constants.PIXELS_TO_METERS, height * Constants.PIXELS_TO_METERS);
     }
 
@@ -141,7 +141,7 @@ public class GameScreen implements Screen {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = Constants.BITMASK_LEVEL_BOUNDS;
-        fixtureDef.filter.maskBits = Constants.BITMASK_PLAYER | Constants.BITMASK_PLAYER_BULLET | Constants.BITMASK_ENEMY_BULLET;
+        fixtureDef.filter.maskBits = Constants.BITMASK_PLAYER | Constants.BITMASK_PLAYER_BULLET;
 
         EdgeShape shape = new EdgeShape();
         shape.set(x1, y1, x2, y2);

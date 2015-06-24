@@ -53,19 +53,21 @@ public class Player extends Actor {
         if(InputManager.moveDownActive)
             movementInput.y -= 1f;
 
-        Vector2 acceleration = new Vector2(movementInput.x * (float) Time.time * Constants.PLAYER_ACCEL_HORIZ,
-                movementInput.y * (float) Time.time * Constants.PLAYER_ACCEL_VERT);
+        Vector2 acceleration = new Vector2(movementInput.x * (float) Time.time * Constants.PLAYER_ACCEL,
+                movementInput.y * (float) Time.time * Constants.PLAYER_ACCEL);
+        acceleration.nor();
 
         Vector2 velocity = getBody().getLinearVelocity();
 
+        // need to revisit this
         Vector2 frictionAdjustment = new Vector2(0f, 0f);
         if(Math.abs(movementInput.x) < 0.1f) {
-            frictionAdjustment.x = (float)Time.time * Constants.AIR_FRICTION * -1f * Math.signum(velocity.x);
+            frictionAdjustment.x = (float)Time.time * Constants.FRICTION * -1f * Math.signum(velocity.x);
             if(Math.signum(frictionAdjustment.x + velocity.x) != Math.signum(velocity.x))
                 frictionAdjustment.x = -1f * velocity.x;
         }
         if(Math.abs(movementInput.y) < 0.1f) {
-            frictionAdjustment.y = (float)Time.time * Constants.AIR_FRICTION * -1f * Math.signum(velocity.y);
+            frictionAdjustment.y = (float)Time.time * Constants.FRICTION * -1f * Math.signum(velocity.y);
             if(Math.signum(frictionAdjustment.y + velocity.y) != Math.signum(velocity.y))
                 frictionAdjustment.y = -1f * velocity.y;
         }
@@ -73,12 +75,9 @@ public class Player extends Actor {
         Vector2 desiredVelocity = new Vector2(velocity.x + frictionAdjustment.x + acceleration.x,
                 velocity.y + frictionAdjustment.y + acceleration.y);
 
-        if(Math.abs(desiredVelocity.x) > Constants.PLAYER_MAXSPEED_HORIZ)
-            desiredVelocity.x = Math.signum(desiredVelocity.x) * Constants.PLAYER_MAXSPEED_HORIZ;
-        if(Math.abs(desiredVelocity.y) > Constants.PLAYER_MAXSPEED_VERT)
-            desiredVelocity.y = Math.signum(desiredVelocity.y) * Constants.PLAYER_MAXSPEED_VERT;
-
-        Gdx.app.log(Constants.LOG_TAG, "x:" + desiredVelocity.x + "  y:" + desiredVelocity.y);
+        float desiredSpeed = desiredVelocity.len();
+        if(desiredSpeed > Constants.PLAYER_MAXSPEED)
+            desiredVelocity.scl(Constants.PLAYER_MAXSPEED / desiredSpeed);
 
         Vector2 deltaVelocity = new Vector2(desiredVelocity.x - velocity.x, desiredVelocity.y - velocity.y);
 
