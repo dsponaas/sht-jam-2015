@@ -1,6 +1,7 @@
 package com.sponezzis.shtjam2015.components;
 
 import com.badlogic.ashley.core.Component;
+import com.sponezzis.shtjam2015.Constants;
 
 /**
  * Created by sponaas on 6/23/15.
@@ -17,7 +18,7 @@ public class PlayerDataComponent extends Component {
 
     public PlayerDataComponent() {
         alive = true;
-        invincibilityTime = -1f;
+        invincibilityTime = Constants.PLAYER_INVINCIBILITY_TIME;
         playerDeathTime = -1f;
 
         points2xTime = -1f;

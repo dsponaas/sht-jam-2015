@@ -110,10 +110,10 @@ public class GameState {
         return spawnTimer;
     }
 
-    private final float ENEMY_SPAWN_BUFFER_HACK = 10f;
+    private final float ENEMY_SPAWN_BUFFER_HACK = 25f;
     private void spawnElephant() {
         float direction = _rand.nextBoolean() ? 1f : -1f;
-        float xPos = direction > 0f ? 0f : _width;
+        float xPos = direction > 0f ? 0f - 100f : _width + 100f;
         float yPos = getRandomFloat(0f + ENEMY_SPAWN_BUFFER_HACK, _height - Constants.TOP_OF_SCREEN_BUFFER - ENEMY_SPAWN_BUFFER_HACK);
         Elephant elephant = Elephant.makeElephant(xPos, yPos, direction);
         EntityManager.getInstance().addEntity(elephant.getEntity());

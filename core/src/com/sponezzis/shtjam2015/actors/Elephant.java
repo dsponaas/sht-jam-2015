@@ -24,7 +24,7 @@ public class Elephant extends Actor {
     public static Elephant makeElephant(float xPos, float yPos, float direction) {
         Entity entity = new Entity();
 
-        RenderComponent renderComponent = new RenderComponent(0);
+        RenderComponent renderComponent = new RenderComponent(1000 - (int)yPos);
 
         Vector2 position = new Vector2(xPos, yPos);
         PositionComponent positionComponent = new PositionComponent(position.x, position.y);

@@ -2,7 +2,6 @@ package com.sponezzis.shtjam2015.actors;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -38,7 +37,7 @@ public class Player extends Actor {
 
         Sprite sprite = new Sprite(ResourceManager.getTexture("player_down"));
         SpriteComponent spriteComponent = new SpriteComponent(sprite);
-        Vector2 position = new Vector2(500f, 500f);
+        Vector2 position = new Vector2(GameState.getInstance().getWidth() / 2, GameState.getInstance().getHeight() / 2);
 
         Body body = BodyFactory.getInstance().generate(entity, "player.json", position);
 
@@ -79,7 +78,7 @@ public class Player extends Actor {
             if(playerDataComponent.playerDeathTime < 0f) {
                 if(GameState.getInstance().getLives() > 0) {
                     GameState.getInstance().decrementLives();
-                    respawn(playerDataComponent);
+                    respawn();
                 }
                 else {
                     ShtJam2015.game.setScreen(new GameOverScreen());
@@ -218,16 +217,14 @@ public class Player extends Actor {
         return new Vector2(positionComponent.x + (getSizeXInPixels() / 2), positionComponent.y + (getSizeYInPixels() / 2));
     }
 
-    private void respawn(PlayerDataComponent playerDataComponent) {
-        playerDataComponent.playerDeathTime = -1f;
-        playerDataComponent.invincibilityTime = Constants.PLAYER_INVINCIBILITY_TIME;
-        playerDataComponent.alive = true;
-        playerDataComponent.rapidShotTime = -1f;
-        playerDataComponent.spreadShotTime = -1f;
-        playerDataComponent.points2xTime = -1f;
+    private void respawn() {
+        EntityManager.getInstance().destroyEntity(getEntity());
+        EntityManager.getInstance().removeActor(this);
 
-        SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
-        spriteComponent.sprite = new Sprite(ResourceManager.getTexture("player_down"));
+        Player player = Player.makePlayer();
+        EntityManager.getInstance().addEntity(player.getEntity());
+        EntityManager.getInstance().addActor(player);
+        GameState.getInstance().setPlayer(player);
     }
 
 }
