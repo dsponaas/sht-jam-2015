@@ -20,16 +20,22 @@ public class Player extends Actor {
     private ComponentMapper<PlayerDataComponent> _playerDataComponents = ComponentMapper.getFor(PlayerDataComponent.class);
     private ComponentMapper<BodyComponent> _bodyComponents = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<SpriteComponent> _spriteComponents = ComponentMapper.getFor(SpriteComponent.class);
-
+/*
+    public enum PlayerDirection {
+        UP, DOWN, LEFT, RIGHT;
+    }
+    private PlayerDirection _direction;
+*/
     public Player(Entity entity) {
         super(entity);
         _shotTimer = -1f;
+//        _direction = PlayerDirection.DOWN;
     }
 
     public static Player makePlayer() {
         Entity entity = new Entity();
 
-        Sprite sprite = new Sprite(ResourceManager.getTexture("player"));
+        Sprite sprite = new Sprite(ResourceManager.getTexture("player_down"));
         SpriteComponent spriteComponent = new SpriteComponent(sprite);
         Vector2 position = new Vector2(500f, 500f);
 
@@ -136,21 +142,38 @@ public class Player extends Actor {
                 shooting = true;
                 shotDirection.y = -1f;
                 pos.y -= getSizeYInPixels() / 2;
+//                _direction = PlayerDirection.DOWN;
+                SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
+                Sprite sprite = new Sprite(ResourceManager.getTexture("player_down"));
+                spriteComponent.sprite = sprite;
             }
             else if(InputManager.shootingLeftActive) {
                 shooting = true;
                 shotDirection.x = -1f;
                 pos.x -= getSizeXInPixels() / 2;
+//                _direction = PlayerDirection.LEFT;
+                SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
+                Sprite sprite = new Sprite(ResourceManager.getTexture("player_left"));
+                spriteComponent.sprite = sprite;
             }
             else if(InputManager.shootingRightActive) {
                 shooting = true;
                 shotDirection.x = 1f;
                 pos.x += getSizeXInPixels() / 2;
+//                _direction = PlayerDirection.RIGHT;
+                SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
+                Sprite sprite = new Sprite(ResourceManager.getTexture("player_left"));
+                sprite.flip(true, false);
+                spriteComponent.sprite = sprite;
             }
             else if(InputManager.shootingUpActive) {
                 shooting = true;
                 shotDirection.y = 1f;
                 pos.y += getSizeYInPixels() / 2;
+//                _direction = PlayerDirection.UP;
+                SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
+                Sprite sprite = new Sprite(ResourceManager.getTexture("player_up"));
+                spriteComponent.sprite = sprite;
             }
             if(shooting) {
                 shoot(pos.x, pos.y, shotDirection.x, shotDirection.y);
@@ -201,7 +224,7 @@ public class Player extends Actor {
         playerDataComponent.points2xTime = -1f;
 
         SpriteComponent spriteComponent = _spriteComponents.get(getEntity());
-        spriteComponent.sprite = new Sprite(ResourceManager.getTexture("player"));
+        spriteComponent.sprite = new Sprite(ResourceManager.getTexture("player_down"));
     }
 
 }

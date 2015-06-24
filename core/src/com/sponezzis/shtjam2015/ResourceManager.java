@@ -19,7 +19,9 @@ public class ResourceManager {
         _textures = new HashMap<String, Texture>();
 
         _textures.put("splashscreen", new Texture("splashscreen.png"));
-        _textures.put("player", new Texture("player.png"));
+        _textures.put("player_left", new Texture("player_left.png"));
+        _textures.put("player_up", new Texture("player_up.png"));
+        _textures.put("player_down", new Texture("player_down.png"));
         _textures.put("deadplayer", new Texture("deadplayer.png"));
         _textures.put("bullet", new Texture("bullet.png"));
         _textures.put("elephant", new Texture("elephant.png"));
