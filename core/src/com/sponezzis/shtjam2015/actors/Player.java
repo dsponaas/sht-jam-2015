@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.sponezzis.shtjam2015.*;
 import com.sponezzis.shtjam2015.components.*;
+import com.sponezzis.shtjam2015.screens.GameOverScreen;
 
 /**
  * Created by sponaas on 6/23/15.
@@ -81,7 +82,7 @@ public class Player extends Actor {
                     respawn(playerDataComponent);
                 }
                 else {
-                    // TODO: GAME OVER
+                    ShtJam2015.game.setScreen(new GameOverScreen());
                 }
             }
         }

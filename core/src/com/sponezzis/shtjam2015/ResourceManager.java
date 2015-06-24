@@ -14,6 +14,7 @@ public class ResourceManager {
 
     private static HashMap<String, Texture> _textures;
     private static BitmapFont _hudFont;
+    private static BitmapFont _scoreFont;
 
     public static void initialize() {
         _textures = new HashMap<String, Texture>();
@@ -33,21 +34,27 @@ public class ResourceManager {
         _textures.put("powerup_2x", new Texture("powerup_2x.png"));
         _textures.put("powerup_2x_small", new Texture("powerup_2x_small.png"));
         _textures.put("ground", new Texture("ground.png"));
+        _textures.put("gameover", new Texture("gameover.png"));
 
-        initHudFont();
+        initFonts();
     }
 
     public static Texture getTexture(String name) {
         return _textures.get(name);
     }
     public static BitmapFont getHudFont() { return _hudFont; }
+    public static BitmapFont getScoreFont() { return _scoreFont; }
 
-    private static void initHudFont() {
+    private static void initFonts() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comicsans.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24;
         _hudFont = generator.generateFont(parameter);
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter2 = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter2.size = 64;
+        _scoreFont = generator.generateFont(parameter2);
 
         generator.dispose();
     }
