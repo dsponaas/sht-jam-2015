@@ -8,7 +8,7 @@
   Fixtures : [
     {
       description: none,
-      isSensor: false,
+      isSensor: true,
       type: RectangleShape,
       width: 50,
       height: 35,

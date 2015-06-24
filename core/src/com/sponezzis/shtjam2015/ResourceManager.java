@@ -20,6 +20,7 @@ public class ResourceManager {
 
         _textures.put("splashscreen", new Texture("splashscreen.png"));
         _textures.put("player", new Texture("player.png"));
+        _textures.put("deadplayer", new Texture("deadplayer.png"));
         _textures.put("bullet", new Texture("bullet.png"));
         _textures.put("elephant", new Texture("elephant.png"));
 

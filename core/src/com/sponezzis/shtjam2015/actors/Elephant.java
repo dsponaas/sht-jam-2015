@@ -1,5 +1,6 @@
 package com.sponezzis.shtjam2015.actors;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,7 @@ import com.sponezzis.shtjam2015.components.*;
 public class Elephant extends Actor {
 
     private float _direction;
+    private ComponentMapper<EnemyDataComponent> _enemyDataComponents = ComponentMapper.getFor(EnemyDataComponent.class);
 
     public Elephant(Entity entity, float direction) {
         super(entity);
@@ -59,6 +61,11 @@ public class Elephant extends Actor {
             return;
         }
 
+        EnemyDataComponent enemyDataComponent = _enemyDataComponents.get(getEntity());
+        if(null == enemyDataComponent) {
+            EntityManager.getInstance().destroyEntity(getEntity());
+            EntityManager.getInstance().removeActor(this);
+        }
     }
 
 }

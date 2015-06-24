@@ -9,10 +9,12 @@ public class PlayerDataComponent extends Component {
 
     public boolean alive;
     public float invincibilityTime;
+    public float playerDeathTime;
 
     public PlayerDataComponent() {
         alive = true;
         invincibilityTime = -1f;
+        playerDeathTime = -1f;
     }
 
 }

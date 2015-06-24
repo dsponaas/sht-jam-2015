@@ -16,7 +16,6 @@ public class EntityManager {
     private Engine _engine;
     private World _world;
     private static Array<Entity> _toDestroy;
-    //    private static Array<Entity> _toAdd;
     private static Array<Actor> _actors;
 
     private EntityManager(Engine engine, World world) {
@@ -65,10 +64,10 @@ public class EntityManager {
             }
             _engine.removeEntity(entity);
         }
+        _toDestroy.clear();
         for(Actor actor: _actors) {
             actor.update();
         }
-        _toDestroy.clear();
     }
 
 }
