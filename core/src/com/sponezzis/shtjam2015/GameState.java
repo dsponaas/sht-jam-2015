@@ -102,7 +102,7 @@ public class GameState {
     private float getSpawnTimer() {
         float spawnTimer = Constants.BASE_SPAWN_TIMER;
         for(int i = 1; i < _level; ++i) {
-            float spawnMod = MIN_SPAWN_INCREASE_RATE_HACK + ((float)i * SPAWN_INCREASE_HACK_MOD);
+            float spawnMod = MIN_SPAWN_INCREASE_RATE_HACK + ((float)(i / 2) * SPAWN_INCREASE_HACK_MOD);
             if(spawnMod > MAX_SPAWN_INCREASE_RATE_HACK)
                 spawnMod = MAX_SPAWN_INCREASE_RATE_HACK;
             spawnTimer *= spawnMod;

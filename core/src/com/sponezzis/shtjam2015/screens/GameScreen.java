@@ -119,8 +119,8 @@ public class GameScreen implements Screen {
 
         // vert bounds
         addLevelBounds(0f, 0f, width * Constants.PIXELS_TO_METERS, 0f);
-        addLevelBounds(0f, (height * Constants.PIXELS_TO_METERS) - Constants.TOP_OF_SCREEN_BUFFER,
-                width * Constants.PIXELS_TO_METERS, (height * Constants.PIXELS_TO_METERS) - Constants.TOP_OF_SCREEN_BUFFER);
+        addLevelBounds(0f, (height * Constants.PIXELS_TO_METERS) - (Constants.TOP_OF_SCREEN_BUFFER * Constants.PIXELS_TO_METERS),
+                width * Constants.PIXELS_TO_METERS, (height * Constants.PIXELS_TO_METERS) - (Constants.TOP_OF_SCREEN_BUFFER * Constants.PIXELS_TO_METERS));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ResourceManager {
         _textures.put("player_left", new Texture("player_left.png"));
         _textures.put("player_up", new Texture("player_up.png"));
         _textures.put("player_down", new Texture("player_down.png"));
-        _textures.put("deadplayer", new Texture("deadplayer.png"));
+        _textures.put("deadplayer", new Texture("player_dead.png"));
         _textures.put("bullet", new Texture("bullet.png"));
         _textures.put("elephant", new Texture("elephant.png"));
         _textures.put("powerup_1up", new Texture("powerup_1up.png"));
