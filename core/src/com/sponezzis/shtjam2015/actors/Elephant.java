@@ -30,6 +30,8 @@ public class Elephant extends Actor {
         PositionComponent positionComponent = new PositionComponent(position.x, position.y);
 
         Sprite sprite = new Sprite(ResourceManager.getTexture("elephant"));
+        if(direction > 0f)
+            sprite.flip(true, false);
         SpriteComponent spriteComponent = new SpriteComponent(sprite);
 
         Body body = BodyFactory.getInstance().generate(entity, "elephant.json", position);

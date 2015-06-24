@@ -11,7 +11,7 @@ public class Constants {
     public static final int TARGET_FPS = 60;
     public static final String LOG_TAG = "ShtJam2015";
 
-    public static final float TOP_OF_SCREEN_BUFFER = 20f;
+    public static final float TOP_OF_SCREEN_BUFFER = 30f;
 
     public static final float BASE_SPAWN_TIMER = 120f;
     public static final float TIME_PER_LEVEL = 600f;

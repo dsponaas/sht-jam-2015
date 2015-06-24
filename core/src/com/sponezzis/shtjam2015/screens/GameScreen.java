@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -33,6 +34,8 @@ public class GameScreen implements Screen {
     private int _screenWidth, _screenHeight;
     private SpriteBatch _spriteBatch;
     private SpriteBatch _hudBatch;
+
+    private Sprite _groundSprite;
 
     private InputManager _inputManager;
 
@@ -63,6 +66,9 @@ public class GameScreen implements Screen {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(_inputManager);
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        _groundSprite = new Sprite(ResourceManager.getTexture("ground"));
+        _groundSprite.setPosition(0f, 0f);
     }
 
     @Override
@@ -82,6 +88,7 @@ public class GameScreen implements Screen {
         GameState.getInstance().update();
 
         _spriteBatch.begin();
+        _groundSprite.draw(_spriteBatch);
         _engine.update((float) Time.time);
         _spriteBatch.setProjectionMatrix(_camera.combined);
         renderActivePowerups();
@@ -91,7 +98,7 @@ public class GameScreen implements Screen {
 
         EntityManager.getInstance().update();
 
-//        _debugRenderer.render(_world, debugMatrix);
+        _debugRenderer.render(_world, debugMatrix);
     }
 
     @Override

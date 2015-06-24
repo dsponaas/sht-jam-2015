@@ -30,6 +30,7 @@ public class ResourceManager {
         _textures.put("powerup_sprd_small", new Texture("powerup_sprd_small.png"));
         _textures.put("powerup_2x", new Texture("powerup_2x.png"));
         _textures.put("powerup_2x_small", new Texture("powerup_2x_small.png"));
+        _textures.put("ground", new Texture("ground.png"));
 
         initHudFont();
     }

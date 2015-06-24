@@ -9,14 +9,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="20"
-   height="20"
-   viewBox="0 0 20 20"
+   width="30"
+   height="30"
+   viewBox="0 0 30 30"
    id="svg7568"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="powerup_1up.svg"
-   inkscape:export-filename="/Users/sponaas/workspace/sht-jam-2015/desktop/assets/powerup_rpd_small.png"
+   inkscape:export-filename="/Users/sponaas/workspace/sht-jam-2015/desktop/assets/powerup_1up.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -56,37 +56,37 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1032.3622)">
+     transform="translate(0,-1022.3622)">
     <ellipse
        style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-opacity:1"
        id="path6943"
-       cx="9.7767859"
-       cy="1042.5853"
-       rx="9.9258547"
-       ry="10.027921"
+       cx="14.814921"
+       cy="1037.5472"
+       rx="14.96399"
+       ry="15.066056"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
        inkscape:export-filename="/Users/sponaas/workspace/sht-jam-2015/desktop/assets/powerup_sprd.png" />
     <ellipse
        style="fill:#ffffff;fill-opacity:0.55681817;stroke:none;stroke-opacity:1"
        id="path6943-8"
-       cx="9.6267996"
-       cy="1042.671"
-       rx="7.855731"
-       ry="7.9365106"
+       cx="14.588806"
+       cy="1037.6759"
+       rx="11.84312"
+       ry="11.9239"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.74993324px;line-height:125%;font-family:'Comic Sans MS';-inkscape-font-specification:'Comic Sans MS';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="2.2098603"
-       y="938.97736"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.67356873px;line-height:125%;font-family:'Comic Sans MS';-inkscape-font-specification:'Comic Sans MS';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="3.4100206"
+       y="937.91742"
        id="text4421"
        sodipodi:linespacing="125%"
-       transform="scale(0.89708966,1.1147158)"><tspan
+       transform="scale(0.8986307,1.1128042)"><tspan
          sodipodi:role="line"
          id="tspan4423"
-         x="2.2098603"
-         y="938.97736">1UP</tspan></text>
+         x="3.4100206"
+         y="937.91742">1UP</tspan></text>
   </g>
 </svg>

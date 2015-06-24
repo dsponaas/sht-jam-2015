@@ -96,11 +96,17 @@ public class GameState {
         }
     }
 
-    private final float SPAWN_INCREASE_RATE_HACK = 0.6f;
+    private final float MIN_SPAWN_INCREASE_RATE_HACK = 0.7f;
+    private final float MAX_SPAWN_INCREASE_RATE_HACK = 0.9f;
+    private final float SPAWN_INCREASE_HACK_MOD = 0.03f;
     private float getSpawnTimer() {
         float spawnTimer = Constants.BASE_SPAWN_TIMER;
-        for(int i = 1; i < _level; ++i)
-            spawnTimer *= SPAWN_INCREASE_RATE_HACK;
+        for(int i = 1; i < _level; ++i) {
+            float spawnMod = MIN_SPAWN_INCREASE_RATE_HACK + ((float)i * SPAWN_INCREASE_HACK_MOD);
+            if(spawnMod > MAX_SPAWN_INCREASE_RATE_HACK)
+                spawnMod = MAX_SPAWN_INCREASE_RATE_HACK;
+            spawnTimer *= spawnMod;
+        }
         return spawnTimer;
     }
 
